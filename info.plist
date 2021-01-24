@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.tianzhao.cv</string>
+	<key>connections</key>
+	<dict>
+		<key>24B8F032-5E88-4D48-8D4F-D59BFFC11912</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>0C43A737-9885-4D83-A3A6-B84981B32C62</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Tianzhao Li</string>
+	<key>description</key>
+	<string>calculate crypto vallues</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Crypto Converter</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>100</integer>
+				<key>keyword</key>
+				<string>cv</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string>Loading</string>
+				<key>script</key>
+				<string>&lt;?php
+
+$query = $argv[1] ?? 'BTC';
+$querys = explode(' ', $query);
+
+$from = trim(strtoupper($querys[0] ?? 'BTC')) ?: 'BTC';
+$to = trim(strtoupper($querys[1] ?? 'USD')) ?: 'USD';
+$amount = trim($querys[2] ?? '1') ?: '1';
+
+// var_dump($querys, $from, $to, $amount);
+
+if (false === $rate = file_get_contents('https://currencio.co/json/rate', false, stream_context_create([
+    'http' =&gt; [
+        'method' =&gt; 'POST',
+        'header' =&gt; 'Content-Type: application/x-www-form-urlencoded',
+        'content' =&gt; 'from=' . rawurlencode($from) . '&amp;to=' . rawurlencode($to)
+    ],
+]))) {
+    // todo: return error to alfred
+}
+
+$rate = json_decode($rate, true);
+if (json_last_error() != JSON_ERROR_NONE) {
+    // todo: return error to alfred
+}
+
+$to_amount = round($rate * $amount, 8);
+
+echo sprintf('{"items": [
+    {
+        "title": "%s",
+        "subtitle": "%f %s to %s",
+        "arg": "%f"
+    }
+]}', $to_amount, $amount, $from, $to, $to_amount);
+
+?&gt;
+</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>BTC USD 1</string>
+				<key>title</key>
+				<string>Crypto Converter</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>24B8F032-5E88-4D48-8D4F-D59BFFC11912</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>0C43A737-9885-4D83-A3A6-B84981B32C62</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Have Fun Staying Poor</string>
+	<key>uidata</key>
+	<dict>
+		<key>0C43A737-9885-4D83-A3A6-B84981B32C62</key>
+		<dict>
+			<key>xpos</key>
+			<integer>415</integer>
+			<key>ypos</key>
+			<integer>100</integer>
+		</dict>
+		<key>24B8F032-5E88-4D48-8D4F-D59BFFC11912</key>
+		<dict>
+			<key>xpos</key>
+			<integer>20</integer>
+			<key>ypos</key>
+			<integer>55</integer>
+		</dict>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>1.0</string>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
