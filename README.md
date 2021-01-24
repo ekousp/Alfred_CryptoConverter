@@ -6,7 +6,7 @@
 
 ## 安装
 
-[点此下载](https://github.com/ekousp/Alfred_CryptoConverter/blob/master/Crypto%20Converter.alfredworkflow)后双击导入Alfred
+[点此下载](https://github.com/ekousp/Alfred_CryptoConverter/raw/master/Crypto%20Converter.alfredworkflow)后双击导入Alfred
 
 ## 使用
 
