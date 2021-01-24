@@ -4,6 +4,10 @@
 
 快速转换数字货币汇率。
 
+## 依赖
+
+此工具以来本地PHP执行环境，需要PHP7+以上。
+
 ## 安装
 
 [点此下载](https://github.com/ekousp/Alfred_CryptoConverter/raw/master/Crypto%20Converter.alfredworkflow)后双击导入Alfred
